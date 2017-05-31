@@ -62,9 +62,9 @@ public class DatabseManage {
             // Fetch the desired value from the Cursor by column index
             number.id = cursor.getLong(0);
             number.title = cursor.getString(2);
-            //number.details = cursor.getString(2);
-            //number.time = cursor.getString(1);
-            //number.date = cursor.getString(4);
+            number.details = cursor.getString(3);
+            number.time = cursor.getString(1);
+            number.date = cursor.getString(4);
 
             // Add the object filled with appropriate data into the list
             arrayList.add(number);

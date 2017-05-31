@@ -15,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.database.DatabseManage;
 
@@ -123,7 +124,8 @@ public class AddNote extends AppCompatActivity {
                 timeEntered = editTime.getText().toString();
                 dateEntered = editDate.getText().toString();
 
-                databseManage.createDatabase("hello" , "pavel" , timeEntered , dateEntered);
+                Toast.makeText(AddNote.this, ""+eventEntered, Toast.LENGTH_SHORT).show();
+                databseManage.createDatabase("hello" , eventEntered , timeEntered , dateEntered);
 
                 tsCurrent = System.currentTimeMillis();
                 ts = tsCurrent.toString();
