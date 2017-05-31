@@ -13,4 +13,21 @@
     tools:context="com.example.android.remindersqliteexample.ShowReminderMessage"
     tools:showIn="@layout/activity_show_reminder_message">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:textSize="17sp"
+            android:textColor="#ffffff"
+            android:layout_margin="10dp"
+            android:background="@drawable/rounded_corners_background"
+            android:padding="10dp"
+            android:id="@+id/reminder_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </ScrollView>
+
+
 </RelativeLayout>
