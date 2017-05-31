@@ -18,6 +18,8 @@
         android:id="@+id/event"
         android:text="eentadaddafaffa"
         />
+
+
     <LinearLayout
         android:paddingRight="10dp"
         android:gravity="right"

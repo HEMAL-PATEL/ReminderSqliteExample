@@ -123,7 +123,7 @@ public class AddNote extends AppCompatActivity {
                 timeEntered = editTime.getText().toString();
                 dateEntered = editDate.getText().toString();
 
-                databseManage.createDatabase(eventEntered , "" , timeEntered , dateEntered);
+                databseManage.createDatabase("hello" , "pavel" , timeEntered , dateEntered);
 
                 tsCurrent = System.currentTimeMillis();
                 ts = tsCurrent.toString();

@@ -37,7 +37,7 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Custom
 
     @Override
     public CustomAdapter onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_recycleview , null);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_recycleview , parent, false);
         CustomAdapter customAdapter = new CustomAdapter(view);
         return customAdapter;
     }
