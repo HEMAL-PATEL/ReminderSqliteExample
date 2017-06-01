@@ -86,7 +86,6 @@ public class DatabseManage {
         return arrayList;
     }
 
-
     public ArrayList<Items> getCheckList(){
         open();
         final ArrayList<Items> arrayList = new ArrayList<>();
@@ -107,6 +106,14 @@ public class DatabseManage {
         return arrayList;
     }
 
+
+    public void update(long id , String title , String details){
+        open();
+        final ContentValues contentValues = new ContentValues();
+        contentValues.put("title" , title);
+        contentValues.put("details" , details);
+        sqLiteDatabase.update(DatabaseHelper.TABLE_CHECK_LIST  ,contentValues , id+ "=" + id , null);
+    }
 
     public void createCheckList(String title , String details){
         items.title = title;

@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.database.CheckListAdapter;
+import com.database.DatabseManage;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pojo.Items;
@@ -21,11 +23,12 @@ public class CheckListActivity extends AppCompatActivity implements DatabaseAdap
 
     String details;
     ArrayList<Items> itemsArrayList = new ArrayList<>();
-    public DatabaseAdapter databaseAdapter;
+    public CheckListAdapter adapter;
     RecyclerView recyclerView;
     public EditText edit;
     Button ok;
     String json;
+    public DatabseManage databseManage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,14 +36,15 @@ public class CheckListActivity extends AppCompatActivity implements DatabaseAdap
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
-        String title = intent.getExtras().getString("title");
+        final String title = intent.getExtras().getString("title");
         details = intent.getExtras().getString("details");
-        long id = intent.getExtras().getLong("id");
+        final long id = intent.getExtras().getLong("id");
         edit = (EditText) findViewById(R.id.editText);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         ok = (Button) findViewById(R.id.ok_button);
+        databseManage = new DatabseManage(getApplicationContext());
 
         Toast.makeText(this, ""+details, Toast.LENGTH_SHORT).show();
 
@@ -54,12 +58,13 @@ public class CheckListActivity extends AppCompatActivity implements DatabaseAdap
                 itemsArrayList.add(new Items(edit.getText().toString()));
                 json = convertToString(itemsArrayList);
                 Toast.makeText(CheckListActivity.this, ""+json, Toast.LENGTH_SHORT).show();
+                databseManage.update(id , title , json);
                 edit.setText("");
             }
         });
 
-        databaseAdapter = new DatabaseAdapter(getApplicationContext() , itemsArrayList , this);
-        recyclerView.setAdapter(databaseAdapter);
+        adapter = new CheckListAdapter(getApplicationContext() , itemsArrayList , this);
+        recyclerView.setAdapter(adapter);
     }
 
     public ArrayList<Items> getArrayList(String value){
