@@ -1,0 +1,59 @@
+package com.example.android.remindersqliteexample;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.database.DatabseManage;
+import com.google.gson.Gson;
+import com.pojo.Items;
+
+import java.util.ArrayList;
+
+public class PutTodo extends AppCompatActivity {
+
+    EditText titleEditText;
+    EditText detailsEditText;
+    public DatabseManage databseManage;
+    String title;
+    String details;
+
+    Button ok;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_put_todo);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        titleEditText = (EditText) findViewById(R.id.edit_1);
+        detailsEditText = (EditText) findViewById(R.id.edit_2);
+
+        title = titleEditText.getText().toString();
+        details = detailsEditText.getText().toString();
+
+        databseManage = new DatabseManage(getApplicationContext());
+
+        ok = (Button) findViewById(R.id.button2);
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Gson gson = new Gson();
+                ArrayList<Items> itemsArrayList = new ArrayList<Items>();
+                itemsArrayList.add(new Items(detailsEditText.getText().toString()));
+                String json = gson.toJson(itemsArrayList);
+                databseManage.createCheckList(titleEditText.getText().toString() , json);
+                Toast.makeText(PutTodo.this, ""+json, Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
+
+    }
+
+}

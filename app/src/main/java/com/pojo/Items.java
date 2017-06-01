@@ -18,6 +18,10 @@ public class Items implements Parcelable{
     public Items (){}
 
 
+    public Items(String title){
+        this.title = title;
+    }
+
     public Items(long id , String title , String details , String date , String time){
 
         this.id = id;

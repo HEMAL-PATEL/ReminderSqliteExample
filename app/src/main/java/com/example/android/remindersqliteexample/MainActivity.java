@@ -45,21 +45,18 @@ public class MainActivity extends AppCompatActivity implements DatabaseAdapter.C
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity.this , AddNote.class);
+                Intent intent = new Intent(MainActivity.this , PutTodo.class);
                 startActivity(intent);
             }
         });
     }
 
-
-
     public void callDatabaseData(){
         databseManage = new DatabseManage(getApplicationContext());
-        itemsArrayList = databseManage.getAllTodo();
+        itemsArrayList = databseManage.getCheckList();
         adapter = new DatabaseAdapter(getBaseContext() , itemsArrayList , this);
         recyclerView.setAdapter(adapter);
     }
-
 
     @Override
     protected void onStart() {
@@ -91,6 +88,10 @@ public class MainActivity extends AppCompatActivity implements DatabaseAdapter.C
 
     @Override
     public void show(int position, Items items) {
-
+        Intent intent = new Intent(MainActivity.this , CheckListActivity.class);
+        intent.putExtra("title" , items.getTitle());
+        intent.putExtra("id" , items.getId());
+        intent.putExtra("details" , items.getDetails());
+        startActivity(intent);
     }
 }

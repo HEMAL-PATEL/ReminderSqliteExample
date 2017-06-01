@@ -25,19 +25,28 @@
         <activity
             android:name=".ShowReminderMessage"
             android:label="@string/title_activity_show_reminder_message"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <receiver android:enabled="true" android:name=".BootUpReceiver"
+        <receiver
+            android:name=".BootUpReceiver"
+            android:enabled="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
-
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-
-
         <receiver android:name=".TimeAlarm" />
+
+        <activity
+            android:name=".PutTodo"
+            android:label="@string/title_activity_put_todo"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CheckListActivity"
+            android:label="@string/title_activity_check_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

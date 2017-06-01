@@ -14,9 +14,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     public static final String TABLE_TODO_LIST = "todo_home";
+    public static final String TABLE_CHECK_LIST = "check_list";
 
     public static final String TABLE_CREATE_TODO_1 = "create table "  + TABLE_TODO_LIST + "( id "
             + " integer primary key autoincrement, title  text not null, details  text not null , time  text not null , date text not null );";
+
+
+    public static final String CREATE_TABLE_CHECK_LIST = "create table "  + TABLE_CHECK_LIST + "( id "
+            + " integer primary key autoincrement, title  text not null, details  text not null );";
 
 
     public DatabaseHelper(Context context) {
@@ -26,6 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(TABLE_CREATE_TODO_1);
+        db.execSQL(CREATE_TABLE_CHECK_LIST);
     }
 
     @Override

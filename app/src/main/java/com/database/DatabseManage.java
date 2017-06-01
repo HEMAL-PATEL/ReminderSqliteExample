@@ -51,6 +51,18 @@ public class DatabseManage {
     }
 
 
+
+    public Items makeCheckList(final Items items){
+        open();
+        final ContentValues contentValues = new ContentValues();
+        contentValues.put("title" , items.title);
+        contentValues.put("details" , items.details);
+        final long id = sqLiteDatabase.insert(DatabaseHelper.TABLE_CHECK_LIST , null , contentValues);
+        items.id = id;
+        return items;
+    }
+
+
     public ArrayList<Items> getAllTodo(){
         open();
         final ArrayList<Items> arrayList = new ArrayList<>();
@@ -74,6 +86,33 @@ public class DatabseManage {
         return arrayList;
     }
 
+
+    public ArrayList<Items> getCheckList(){
+        open();
+        final ArrayList<Items> arrayList = new ArrayList<>();
+        final Cursor cursor = sqLiteDatabase.rawQuery("select * from " + DatabaseHelper.TABLE_CHECK_LIST , null);
+        cursor.moveToLast();
+        while (!cursor.isBeforeFirst()) {
+            final Items number = new Items();
+
+            // Fetch the desired value from the Cursor by column index
+            number.id = cursor.getLong(0);
+            number.title = cursor.getString(1);
+            number.details = cursor.getString(2);
+            // Add the object filled with appropriate data into the list
+            arrayList.add(number);
+            // Move the Cursor pointer to next for the next record to fetch
+            cursor.moveToPrevious();
+        }
+        return arrayList;
+    }
+
+
+    public void createCheckList(String title , String details){
+        items.title = title;
+        items.details = details;
+        makeCheckList(items);
+    }
 
     public void createDatabase(String title , String details , String time , String date){
         items.date = date;

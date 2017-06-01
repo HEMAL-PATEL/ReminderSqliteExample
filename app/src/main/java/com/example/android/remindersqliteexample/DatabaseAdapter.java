@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.database.DatabseManage;
 import com.pojo.Items;
 
 import java.util.ArrayList;
@@ -24,15 +23,14 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Custom
     public Context context;
     public ArrayList<Items> itemsArrayList;
     public CallBack callBack;
-    public DatabseManage databseManage;
-    public ArrayList<Items> getItemsArrayList;
+
+
 
     public DatabaseAdapter(Context context , ArrayList<Items> itemsArrayList , CallBack callBack){
         this.context = context;
         this.itemsArrayList = itemsArrayList;
         this.callBack = callBack;
-        databseManage = new DatabseManage(context);
-        getItemsArrayList = databseManage.getAllTodo();
+
     }
 
     @Override
@@ -44,10 +42,15 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Custom
 
     @Override
     public void onBindViewHolder(final CustomAdapter holder, int position) {
-        final Items items = itemsArrayList.get(position);
+        final Items items = itemsArrayList.get(position+1);
         holder.event.setText(items.getTitle());
-        holder.timedate.setText("At  "+items.getTime() +"  On  "+items.getDate());
 
+        holder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callBack.show(holder.getAdapterPosition() , items);
+            }
+        });
         /*
         if (isChecked()==true){
             Toast.makeText(context, "True", Toast.LENGTH_SHORT).show();
@@ -63,7 +66,7 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Custom
 
     @Override
     public int getItemCount() {
-        return itemsArrayList.size();
+        return itemsArrayList.size()-1;
     }
 
 
