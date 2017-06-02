@@ -12,14 +12,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.database.CheckListAdapter;
-import com.database.DatabseManage;
+import com.database.DatabaseManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.pojo.Items;
 
 import java.util.ArrayList;
 
-public class CheckListActivity extends AppCompatActivity implements DatabaseAdapter.CallBack{
+public class CheckListActivity extends AppCompatActivity implements CheckListAdapter.CallBack{
 
     String details;
     ArrayList<Items> itemsArrayList = new ArrayList<>();
@@ -28,7 +28,7 @@ public class CheckListActivity extends AppCompatActivity implements DatabaseAdap
     public EditText edit;
     Button ok;
     String json;
-    public DatabseManage databseManage;
+    public DatabaseManager databaseManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +44,7 @@ public class CheckListActivity extends AppCompatActivity implements DatabaseAdap
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(linearLayoutManager);
         ok = (Button) findViewById(R.id.ok_button);
-        databseManage = new DatabseManage(getApplicationContext());
+        databaseManager = new DatabaseManager(getApplicationContext());
 
         Toast.makeText(this, ""+details, Toast.LENGTH_SHORT).show();
 
@@ -58,7 +58,7 @@ public class CheckListActivity extends AppCompatActivity implements DatabaseAdap
                 itemsArrayList.add(new Items(edit.getText().toString()));
                 json = convertToString(itemsArrayList);
                 Toast.makeText(CheckListActivity.this, ""+json, Toast.LENGTH_SHORT).show();
-                databseManage.update(id , title , json);
+                databaseManager.update(id, title , json);
                 edit.setText("");
             }
         });
@@ -77,9 +77,14 @@ public class CheckListActivity extends AppCompatActivity implements DatabaseAdap
             else {
                 Toast.makeText(this, "new array list null", Toast.LENGTH_SHORT).show();
             }
-
         }
         return null;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
     }
 
     public String convertToString(ArrayList<Items> itemsArrayList){
@@ -93,7 +98,23 @@ public class CheckListActivity extends AppCompatActivity implements DatabaseAdap
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @Override
     public void show(int position, Items items) {
+
+    }
+
+    @Override
+    public void checkBoxClicked(long id, Items items) {
+
+    }
+
+    @Override
+    public void disClickCheckBox(long id, Items items) {
 
     }
 }

@@ -11,7 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.database.DatabseManage;
+import com.database.DatabaseAdapter;
+import com.database.DatabaseManager;
 import com.pojo.Items;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseAdapter.C
     RecyclerView recyclerView;
     public DatabaseAdapter adapter;
     public ArrayList<Items> itemsArrayList;
-    public DatabseManage databseManage;
+    public DatabaseManager databaseManager;
 
 
     @Override
@@ -52,8 +53,8 @@ public class MainActivity extends AppCompatActivity implements DatabaseAdapter.C
     }
 
     public void callDatabaseData(){
-        databseManage = new DatabseManage(getApplicationContext());
-        itemsArrayList = databseManage.getCheckList();
+        databaseManager = new DatabaseManager(getApplicationContext());
+        itemsArrayList = databaseManager.getCheckList();
         adapter = new DatabaseAdapter(getBaseContext() , itemsArrayList , this);
         recyclerView.setAdapter(adapter);
     }

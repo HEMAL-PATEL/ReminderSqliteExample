@@ -1,4 +1,4 @@
-package com.example.android.remindersqliteexample;
+package com.database;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.android.remindersqliteexample.R;
 import com.pojo.Items;
 
 import java.util.ArrayList;
@@ -28,7 +30,6 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Custom
         this.context = context;
         this.itemsArrayList = itemsArrayList;
         this.callBack = callBack;
-
     }
 
     @Override
@@ -40,8 +41,10 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Custom
 
     @Override
     public void onBindViewHolder(final CustomAdapter holder, int position) {
-        final Items items = itemsArrayList.get(position+1);
+        final Items items = itemsArrayList.get(position);
         holder.event.setText(items.getTitle());
+
+        Toast.makeText(context, ""+items.getId()+""+items.getTitle(), Toast.LENGTH_SHORT).show();
 
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,17 +66,14 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Custom
 
     @Override
     public int getItemCount() {
-        return itemsArrayList.size()-1;
+        return itemsArrayList.size();
     }
-
 
     public interface CallBack{
         void show(int position, Items items);
     }
 
     public class CustomAdapter extends RecyclerView.ViewHolder{
-
-
         @Bind(R.id.event)
         TextView event;
         @Bind(R.id.time_and_date)
@@ -86,6 +86,4 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Custom
             ButterKnife.bind(this, itemView);
         }
     }
-
-
 }

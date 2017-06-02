@@ -15,6 +15,19 @@ public class Items implements Parcelable{
     public String date;
     public String time;
 
+
+
+
+    public long checkBoxId;
+
+    public long getCheckBoxId() {
+        return checkBoxId;
+    }
+
+    public void setCheckBoxId(long checkBoxId) {
+        this.checkBoxId = checkBoxId;
+    }
+
     public Items (){}
 
 

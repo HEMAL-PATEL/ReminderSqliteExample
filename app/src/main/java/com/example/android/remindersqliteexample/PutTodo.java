@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.database.DatabseManage;
+import com.database.DatabaseManager;
 import com.google.gson.Gson;
 import com.pojo.Items;
 
@@ -18,7 +18,7 @@ public class PutTodo extends AppCompatActivity {
 
     EditText titleEditText;
     EditText detailsEditText;
-    public DatabseManage databseManage;
+    public DatabaseManager databaseManager;
     String title;
     String details;
 
@@ -37,7 +37,7 @@ public class PutTodo extends AppCompatActivity {
         title = titleEditText.getText().toString();
         details = detailsEditText.getText().toString();
 
-        databseManage = new DatabseManage(getApplicationContext());
+        databaseManager = new DatabaseManager(getApplicationContext());
 
         ok = (Button) findViewById(R.id.button2);
         ok.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +47,7 @@ public class PutTodo extends AppCompatActivity {
                 ArrayList<Items> itemsArrayList = new ArrayList<Items>();
                 itemsArrayList.add(new Items(detailsEditText.getText().toString()));
                 String json = gson.toJson(itemsArrayList);
-                databseManage.createCheckList(titleEditText.getText().toString() , json);
+                databaseManager.createCheckList(titleEditText.getText().toString() , json);
                 Toast.makeText(PutTodo.this, ""+json, Toast.LENGTH_SHORT).show();
                 finish();
             }

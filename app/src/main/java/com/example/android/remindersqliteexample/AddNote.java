@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.database.DatabseManage;
+import com.database.DatabaseManager;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,7 +46,7 @@ public class AddNote extends AppCompatActivity {
     public String timeToNotify;
 
 
-    public DatabseManage databseManage;
+    public DatabaseManager databaseManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +54,7 @@ public class AddNote extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        databseManage = new DatabseManage(getApplicationContext());
+        databaseManager = new DatabaseManager(getApplicationContext());
 
         editEvent = (EditText) findViewById(event);
         editTime = (EditText) findViewById(R.id.time);
@@ -125,7 +125,7 @@ public class AddNote extends AppCompatActivity {
                 dateEntered = editDate.getText().toString();
 
                 Toast.makeText(AddNote.this, ""+eventEntered, Toast.LENGTH_SHORT).show();
-                databseManage.createDatabase("hello" , eventEntered , timeEntered , dateEntered);
+                databaseManager.createDatabase("hello" , eventEntered , timeEntered , dateEntered);
 
                 tsCurrent = System.currentTimeMillis();
                 ts = tsCurrent.toString();

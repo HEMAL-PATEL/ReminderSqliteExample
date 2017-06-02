@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.example.android.remindersqliteexample.DatabaseAdapter;
 import com.example.android.remindersqliteexample.R;
 import com.pojo.Items;
 
@@ -26,9 +25,9 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Cust
 
     public Context context;
     public ArrayList<Items> itemsArrayList;
-    public DatabaseAdapter.CallBack callBack;
+    public CallBack callBack;
 
-    public CheckListAdapter(Context context , ArrayList<Items> itemsArrayList , DatabaseAdapter.CallBack callBack){
+    public CheckListAdapter(Context context , ArrayList<Items> itemsArrayList , CallBack callBack){
         this.context = context;
         this.itemsArrayList = itemsArrayList;
         this.callBack = callBack;
@@ -54,7 +53,7 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Cust
             }
         });
 
-        if (items.getId()==1){
+        if (items.checkBoxId==1){
             holder.checkBox.setChecked(true);
         }
         else {
@@ -64,10 +63,12 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Cust
             @Override
             public void onClick(View v) {
                 if (holder.checkBox.isChecked() == true){
-                    items.setId(1);
+                    items.setCheckBoxId(1);
+                    callBack.checkBoxClicked(items.getId() , items);
 
                 }else {
-                    items.setId(0);
+                    items.setCheckBoxId(0);
+                    callBack.disClickCheckBox(items.getId() , items);
                 }
             }
         });
@@ -80,6 +81,8 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListAdapter.Cust
 
     public interface CallBack{
         void show(int position, Items items);
+        void checkBoxClicked(long id , Items items);
+        void disClickCheckBox(long id , Items items);
     }
 
     public class CustomAdapter extends RecyclerView.ViewHolder{

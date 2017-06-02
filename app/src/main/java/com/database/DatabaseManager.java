@@ -14,14 +14,14 @@ import java.util.ArrayList;
  * Created by android on 5/31/2017.
  */
 
-public class DatabseManage {
+public class DatabaseManager {
 
     public SQLiteDatabase sqLiteDatabase;
     public DatabaseHelper databaseHelper;
     public Context context;
     public Items items;
 
-    public DatabseManage(Context context){
+    public DatabaseManager(Context context){
 
         this.context = context;
         databaseHelper = new DatabaseHelper(context);
@@ -47,6 +47,7 @@ public class DatabseManage {
 
         final long id = sqLiteDatabase.insert(DatabaseHelper.TABLE_TODO_LIST , null , contentValues);
         items.id = id;
+        close();
         return items;
     }
 
@@ -59,7 +60,9 @@ public class DatabseManage {
         contentValues.put("details" , items.details);
         final long id = sqLiteDatabase.insert(DatabaseHelper.TABLE_CHECK_LIST , null , contentValues);
         items.id = id;
+        close();
         return items;
+
     }
 
 
@@ -83,6 +86,7 @@ public class DatabseManage {
             // Move the Cursor pointer to next for the next record to fetch
             cursor.moveToPrevious();
         }
+        close();
         return arrayList;
     }
 
@@ -103,6 +107,7 @@ public class DatabseManage {
             // Move the Cursor pointer to next for the next record to fetch
             cursor.moveToPrevious();
         }
+        close();
         return arrayList;
     }
 
@@ -110,9 +115,12 @@ public class DatabseManage {
     public void update(long id , String title , String details){
         open();
         final ContentValues contentValues = new ContentValues();
+        contentValues.put("id" , id);
         contentValues.put("title" , title);
         contentValues.put("details" , details);
-        sqLiteDatabase.update(DatabaseHelper.TABLE_CHECK_LIST  ,contentValues , id+ "=" + id , null);
+        sqLiteDatabase.update(DatabaseHelper.TABLE_CHECK_LIST  ,contentValues , "id" + "=" + id , null);
+        //sqLiteDatabase.update(DatabaseHelper.TABLE_CHECK_LIST  ,contentValues , "title" + "=" + "title" , null);
+        close();
     }
 
     public void createCheckList(String title , String details){
