@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.database.DatabaseManager;
 import com.google.gson.Gson;
-import com.pojo.Items;
+import com.pojo.ItemCheckList;
 
 import java.util.ArrayList;
 
@@ -44,8 +44,8 @@ public class PutTodo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Gson gson = new Gson();
-                ArrayList<Items> itemsArrayList = new ArrayList<Items>();
-                itemsArrayList.add(new Items(detailsEditText.getText().toString()));
+                ArrayList<ItemCheckList> itemsArrayList = new ArrayList<ItemCheckList>();
+                itemsArrayList.add(new ItemCheckList(detailsEditText.getText().toString()));
                 String json = gson.toJson(itemsArrayList);
                 databaseManager.createCheckList(titleEditText.getText().toString() , json);
                 Toast.makeText(PutTodo.this, ""+json, Toast.LENGTH_SHORT).show();

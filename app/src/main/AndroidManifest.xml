@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddNote"
+            android:name=".AddReminder"
             android:label="@string/title_activity_add_note"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -44,7 +44,7 @@
             android:label="@string/title_activity_put_todo"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".CheckListActivity"
+            android:name=".CheckItemActivity"
             android:label="@string/title_activity_check_list"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

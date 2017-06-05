@@ -5,11 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.remindersqliteexample.R;
-import com.pojo.Items;
+import com.pojo.ItemCheckList;
 
 import java.util.ArrayList;
 
@@ -17,34 +17,34 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by android on 4/25/2017.
+ * Created by android on 6/2/2017.
  */
 
-public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.CustomAdapter>{
+public class CheckListItemAdapter extends RecyclerView.Adapter<CheckListItemAdapter.CustomAdapter>{
+
 
     public Context context;
-    public ArrayList<Items> itemsArrayList;
+    public ArrayList<ItemCheckList> itemsArrayList;
     public CallBack callBack;
 
-    public DatabaseAdapter(Context context , ArrayList<Items> itemsArrayList , CallBack callBack){
+    public CheckListItemAdapter(Context context , ArrayList<ItemCheckList> itemsArrayList , CallBack callBack){
         this.context = context;
         this.itemsArrayList = itemsArrayList;
         this.callBack = callBack;
+
     }
 
     @Override
     public CustomAdapter onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_recycleview , parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_check_list , null);
         CustomAdapter customAdapter = new CustomAdapter(view);
         return customAdapter;
     }
 
     @Override
     public void onBindViewHolder(final CustomAdapter holder, int position) {
-        final Items items = itemsArrayList.get(position);
+        final ItemCheckList items = itemsArrayList.get(position+1);
         holder.event.setText(items.getTitle());
-
-        Toast.makeText(context, ""+items.getId()+""+items.getTitle(), Toast.LENGTH_SHORT).show();
 
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,32 +52,47 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Custom
                 callBack.show(holder.getAdapterPosition() , items);
             }
         });
-        /*
-        if (isChecked()==true){
-            Toast.makeText(context, "True", Toast.LENGTH_SHORT).show();
+
+        if (items.checkBoxId==1){
             holder.checkBox.setChecked(true);
         }
         else {
             holder.checkBox.setChecked(false);
         }
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.checkBox.isChecked()){
+                    items.setCheckBoxId(1);
+                    callBack.checkBoxClicked(items.getId() , items);
 
-        */
+                }else {
+                    items.setCheckBoxId(0);
+                    callBack.disClickCheckBox(items.getId() , items);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return itemsArrayList.size();
+        return itemsArrayList.size()-1;
     }
 
     public interface CallBack{
-        void show(int position, Items items);
+        void show(int position, ItemCheckList items);
+        void checkBoxClicked(long id , ItemCheckList items);
+        void disClickCheckBox(long id , ItemCheckList items);
     }
 
     public class CustomAdapter extends RecyclerView.ViewHolder{
-        @Bind(R.id.event)
+
+        @Bind(R.id.item_title)
         TextView event;
-        @Bind(R.id.time_and_date)
+        @Bind(R.id.item_details)
         TextView timedate;
+        @Bind(R.id.id_check)
+        CheckBox checkBox;
 
         View view;
         public CustomAdapter(View itemView) {
@@ -86,4 +101,5 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Custom
             ButterKnife.bind(this, itemView);
         }
     }
+
 }

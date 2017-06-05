@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
-import com.pojo.Items;
+import com.pojo.ItemCheckList;
 
 import java.util.ArrayList;
 
@@ -19,13 +19,13 @@ public class DatabaseManager {
     public SQLiteDatabase sqLiteDatabase;
     public DatabaseHelper databaseHelper;
     public Context context;
-    public Items items;
+    public ItemCheckList items;
 
     public DatabaseManager(Context context){
 
         this.context = context;
         databaseHelper = new DatabaseHelper(context);
-        items = new Items();
+        items = new ItemCheckList();
     }
 
 
@@ -37,7 +37,7 @@ public class DatabaseManager {
         sqLiteDatabase.close();
     }
 
-    public Items saveItems(final Items items){
+    public ItemCheckList saveItems(final ItemCheckList items){
         open();
         final ContentValues contentValues = new ContentValues();
         contentValues.put("title" , items.title);
@@ -53,7 +53,7 @@ public class DatabaseManager {
 
 
 
-    public Items makeCheckList(final Items items){
+    public ItemCheckList makeCheckList(final ItemCheckList items){
         open();
         final ContentValues contentValues = new ContentValues();
         contentValues.put("title" , items.title);
@@ -66,13 +66,13 @@ public class DatabaseManager {
     }
 
 
-    public ArrayList<Items> getAllTodo(){
+    public ArrayList<ItemCheckList> getAllTodo(){
         open();
-        final ArrayList<Items> arrayList = new ArrayList<>();
+        final ArrayList<ItemCheckList> arrayList = new ArrayList<>();
         final Cursor cursor = sqLiteDatabase.rawQuery("select * from " + DatabaseHelper.TABLE_TODO_LIST , null);
         cursor.moveToLast();
         while (!cursor.isBeforeFirst()) {
-            final Items number = new Items();
+            final ItemCheckList number = new ItemCheckList();
 
             // Fetch the desired value from the Cursor by column index
             number.id = cursor.getLong(0);
@@ -90,13 +90,13 @@ public class DatabaseManager {
         return arrayList;
     }
 
-    public ArrayList<Items> getCheckList(){
+    public ArrayList<ItemCheckList> getCheckList(){
         open();
-        final ArrayList<Items> arrayList = new ArrayList<>();
+        final ArrayList<ItemCheckList> arrayList = new ArrayList<>();
         final Cursor cursor = sqLiteDatabase.rawQuery("select * from " + DatabaseHelper.TABLE_CHECK_LIST , null);
         cursor.moveToLast();
         while (!cursor.isBeforeFirst()) {
-            final Items number = new Items();
+            final ItemCheckList number = new ItemCheckList();
 
             // Fetch the desired value from the Cursor by column index
             number.id = cursor.getLong(0);
@@ -112,7 +112,7 @@ public class DatabaseManager {
     }
 
 
-    public void update(long id , String title , String details){
+    public void updateCheckList(long id , String title , String details){
         open();
         final ContentValues contentValues = new ContentValues();
         contentValues.put("id" , id);

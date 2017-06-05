@@ -11,21 +11,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.database.DatabaseAdapter;
+import com.database.CheckListAdapter;
 import com.database.DatabaseManager;
-import com.pojo.Items;
+import com.pojo.ItemCheckList;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements DatabaseAdapter.CallBack{
+public class MainActivity extends AppCompatActivity implements CheckListAdapter.CallBack{
 
     @Bind(R.id.recycler_view)
     RecyclerView recyclerView;
-    public DatabaseAdapter adapter;
-    public ArrayList<Items> itemsArrayList;
+    public CheckListAdapter adapter;
+    public ArrayList<ItemCheckList> itemsArrayList;
     public DatabaseManager databaseManager;
 
 
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements DatabaseAdapter.C
     public void callDatabaseData(){
         databaseManager = new DatabaseManager(getApplicationContext());
         itemsArrayList = databaseManager.getCheckList();
-        adapter = new DatabaseAdapter(getBaseContext() , itemsArrayList , this);
+        adapter = new CheckListAdapter(getBaseContext() , itemsArrayList , this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -88,8 +88,8 @@ public class MainActivity extends AppCompatActivity implements DatabaseAdapter.C
     }
 
     @Override
-    public void show(int position, Items items) {
-        Intent intent = new Intent(MainActivity.this , CheckListActivity.class);
+    public void show(int position, ItemCheckList items) {
+        Intent intent = new Intent(MainActivity.this , CheckItemActivity.class);
         intent.putExtra("title" , items.getTitle());
         intent.putExtra("id" , items.getId());
         intent.putExtra("details" , items.getDetails());

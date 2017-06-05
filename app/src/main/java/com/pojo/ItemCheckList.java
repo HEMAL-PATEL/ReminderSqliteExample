@@ -7,16 +7,13 @@ import android.os.Parcelable;
  * Created by android on 5/31/2017.
  */
 
-public class Items implements Parcelable{
+public class ItemCheckList implements Parcelable{
 
     public long id;
     public String title;
     public String details;
     public String date;
     public String time;
-
-
-
 
     public long checkBoxId;
 
@@ -28,14 +25,14 @@ public class Items implements Parcelable{
         this.checkBoxId = checkBoxId;
     }
 
-    public Items (){}
+    public ItemCheckList(){}
 
 
-    public Items(String title){
+    public ItemCheckList(String title){
         this.title = title;
     }
 
-    public Items(long id , String title , String details , String date , String time){
+    public ItemCheckList(long id , String title , String details , String date , String time){
 
         this.id = id;
         this.time = time;
@@ -45,7 +42,7 @@ public class Items implements Parcelable{
     }
 
 
-    protected Items(Parcel in) {
+    protected ItemCheckList(Parcel in) {
         id = in.readLong();
         title = in.readString();
         details = in.readString();
@@ -53,15 +50,15 @@ public class Items implements Parcelable{
         time = in.readString();
     }
 
-    public static final Creator<Items> CREATOR = new Creator<Items>() {
+    public static final Creator<ItemCheckList> CREATOR = new Creator<ItemCheckList>() {
         @Override
-        public Items createFromParcel(Parcel in) {
-            return new Items(in);
+        public ItemCheckList createFromParcel(Parcel in) {
+            return new ItemCheckList(in);
         }
 
         @Override
-        public Items[] newArray(int size) {
-            return new Items[size];
+        public ItemCheckList[] newArray(int size) {
+            return new ItemCheckList[size];
         }
     };
 

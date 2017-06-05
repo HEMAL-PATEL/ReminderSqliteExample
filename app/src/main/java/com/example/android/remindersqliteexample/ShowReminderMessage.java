@@ -20,7 +20,6 @@ public class ShowReminderMessage extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         message = (TextView) findViewById(R.id.reminder_msg);
         Bundle bundle = getIntent().getExtras();
         String msg = bundle.getString("ReminderMsg");

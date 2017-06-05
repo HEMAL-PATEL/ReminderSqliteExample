@@ -26,7 +26,7 @@ import java.util.Date;
 
 import static com.example.android.remindersqliteexample.R.id.event;
 
-public class AddNote extends AppCompatActivity {
+public class AddReminder extends AppCompatActivity {
 
     public EditText editEvent, editDate , editTime;
     public int year , month , day , hour , minute;
@@ -70,7 +70,7 @@ public class AddNote extends AppCompatActivity {
                 minute = c1.get(Calendar.MINUTE);
 
                 // Launch Time Picker Dialog
-                TimePickerDialog timePickerDialog = new TimePickerDialog(AddNote.this,
+                TimePickerDialog timePickerDialog = new TimePickerDialog(AddReminder.this,
                         new TimePickerDialog.OnTimeSetListener() {
 
                             @Override
@@ -99,7 +99,7 @@ public class AddNote extends AppCompatActivity {
                 day = c2.get(Calendar.DAY_OF_MONTH);
 
                 // Launch Date Picker Dialog
-                DatePickerDialog datePickerDialog = new DatePickerDialog(AddNote.this,
+                DatePickerDialog datePickerDialog = new DatePickerDialog(AddReminder.this,
                         new DatePickerDialog.OnDateSetListener() {
 
                             @Override
@@ -124,7 +124,7 @@ public class AddNote extends AppCompatActivity {
                 timeEntered = editTime.getText().toString();
                 dateEntered = editDate.getText().toString();
 
-                Toast.makeText(AddNote.this, ""+eventEntered, Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddReminder.this, ""+eventEntered, Toast.LENGTH_SHORT).show();
                 databaseManager.createDatabase("hello" , eventEntered , timeEntered , dateEntered);
 
                 tsCurrent = System.currentTimeMillis();

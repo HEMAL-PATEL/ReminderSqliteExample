@@ -11,23 +11,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.database.CheckListAdapter;
+import com.database.CheckListItemAdapter;
 import com.database.DatabaseManager;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.pojo.Items;
+import com.pojo.ItemCheckList;
 
 import java.util.ArrayList;
 
-public class CheckListActivity extends AppCompatActivity implements CheckListAdapter.CallBack{
+public class CheckItemActivity extends AppCompatActivity implements CheckListItemAdapter.CallBack{
 
-    String details;
-    ArrayList<Items> itemsArrayList = new ArrayList<>();
-    public CheckListAdapter adapter;
+    public static String details;
+    public static String title;
+    ArrayList<ItemCheckList> itemsArrayList = new ArrayList<>();
+    public CheckListItemAdapter adapter;
     RecyclerView recyclerView;
     public EditText edit;
     Button ok;
-    String json;
+    public static String json;
+    public static long databseID;
     public DatabaseManager databaseManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +38,9 @@ public class CheckListActivity extends AppCompatActivity implements CheckListAda
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
-        final String title = intent.getExtras().getString("title");
+        title = intent.getExtras().getString("title");
         details = intent.getExtras().getString("details");
-        final long id = intent.getExtras().getLong("id");
+        databseID = intent.getExtras().getLong("id");
         edit = (EditText) findViewById(R.id.editText);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -46,31 +48,27 @@ public class CheckListActivity extends AppCompatActivity implements CheckListAda
         ok = (Button) findViewById(R.id.ok_button);
         databaseManager = new DatabaseManager(getApplicationContext());
 
-        Toast.makeText(this, ""+details, Toast.LENGTH_SHORT).show();
-
-
         itemsArrayList = getArrayList(details);
-
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemsArrayList.add(new Items(edit.getText().toString()));
+                itemsArrayList.add(new ItemCheckList(edit.getText().toString()));
                 json = convertToString(itemsArrayList);
-                Toast.makeText(CheckListActivity.this, ""+json, Toast.LENGTH_SHORT).show();
-                databaseManager.update(id, title , json);
+                //Toast.makeText(CheckItemActivity.this, ""+json, Toast.LENGTH_SHORT).show();
+                databaseManager.updateCheckList(databseID, title , json);
                 edit.setText("");
             }
         });
 
-        adapter = new CheckListAdapter(getApplicationContext() , itemsArrayList , this);
+        adapter = new CheckListItemAdapter(getApplicationContext() , itemsArrayList , this);
         recyclerView.setAdapter(adapter);
     }
 
-    public ArrayList<Items> getArrayList(String value){
+    public ArrayList<ItemCheckList> getArrayList(String value){
         if (!value.isEmpty()){
             Gson gson = new Gson();
-            ArrayList<Items> newArrayList = gson.fromJson(value , new TypeToken<ArrayList<Items>>(){}.getType());
+            ArrayList<ItemCheckList> newArrayList = gson.fromJson(value , new TypeToken<ArrayList<ItemCheckList>>(){}.getType());
             if (!newArrayList.isEmpty()&& newArrayList.size()>0){
                 return newArrayList;
             }
@@ -87,9 +85,9 @@ public class CheckListActivity extends AppCompatActivity implements CheckListAda
         finish();
     }
 
-    public String convertToString(ArrayList<Items> itemsArrayList){
-        ArrayList<Items> convertToString = new ArrayList<>();
-        for (Items items:itemsArrayList){
+    public String convertToString(ArrayList<ItemCheckList> itemsArrayList){
+        ArrayList<ItemCheckList> convertToString = new ArrayList<>();
+        for (ItemCheckList items:itemsArrayList){
             convertToString.add(items);
         }
         Gson gson = new Gson();
@@ -104,17 +102,20 @@ public class CheckListActivity extends AppCompatActivity implements CheckListAda
     }
 
     @Override
-    public void show(int position, Items items) {
+    public void show(int position, ItemCheckList items) {
 
     }
 
     @Override
-    public void checkBoxClicked(long id, Items items) {
-
+    public void checkBoxClicked(long id, ItemCheckList items) {
+        json = convertToString(itemsArrayList);
+        Toast.makeText(this, ""+id, Toast.LENGTH_SHORT).show();
+        databaseManager.updateCheckList(databseID, title , json);
     }
 
     @Override
-    public void disClickCheckBox(long id, Items items) {
-
+    public void disClickCheckBox(long id, ItemCheckList items) {
+        json = convertToString(itemsArrayList);
+        databaseManager.updateCheckList(databseID, title , json);
     }
 }
